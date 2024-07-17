@@ -1,10 +1,11 @@
+// src/app.module.ts
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { ConfigAppModule } from './config/config.module';
+import { RabbitmqModule } from './rabbitmq/rabbitmq.module';
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [ConfigAppModule, RabbitmqModule],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}
