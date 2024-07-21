@@ -9,4 +9,14 @@ export class AppController {
   getHello(): string {
     return this.appService.getHello();
   }
+
+  // @Get('health')
+  // getHealth(): string {
+  // return this.
+  // }
+
+  @Get('ping-template')
+  async pingTemplate(): Promise<string> {
+    return this.appService.pingTemplateMicroservice();
+  }
 }
