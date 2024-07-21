@@ -1,8 +1,8 @@
-# Stage 1: Build Stage --------------------------------------
-FROM node:20 as build
+# Stage 1: Build Stage
+FROM node:20-slim as build
 
 # Install git (required by npm install)
-RUN apt-get update && apt-get install -y git
+RUN apt-get update
 
 # Set the working directory in the container
 WORKDIR /app
@@ -16,26 +16,22 @@ RUN npm install
 # Copy all files into the container (including .ts files)
 COPY . .
 
-# Build the TypeScript files (adjust the build script based on your project) add  && npm run sentry:sourcemaps
+# Build the TypeScript files
 RUN npm run build
 
-# Stage 2: Production Stage --------------------------------------
-FROM node:20
+# Stage 2: Production Stage
+FROM node:20-slim
 
 # Set the working directory in the container
 WORKDIR /app
 
-# Copy only package.json and package-lock.json to leverage Docker cache
-COPY package*.json ./
-
-# Install git (required by npm install)
-RUN apt-get update && apt-get install -y git
+# Copy only necessary files from the build stage
+COPY --from=build /app/package*.json ./
+COPY --from=build /app/dist ./dist
+COPY --from=build /app/schema.gql ./schema.gql
 
 # Install only production dependencies
-RUN npm install --omit=dev
-
-# Copy necessary files into the container
-COPY --from=build /app/dist ./dist
+RUN apt-get update && npm install --omit=dev
 
 # Set NODE_ENV to production for better performance
 ENV NODE_ENV=production
@@ -44,8 +40,6 @@ ARG BUILD_MODE
 ENV MODE=$BUILD_MODE
 
 # Expose ports
-EXPOSE 80
-EXPOSE 8080
 EXPOSE 3000
 
 # Run the application
