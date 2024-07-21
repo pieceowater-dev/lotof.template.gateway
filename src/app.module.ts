@@ -8,6 +8,7 @@ import { HealthModule } from './health/health.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ClientsModule, Transport } from '@nestjs/microservices';
+import { MicroservicesModule } from './microservices/microservices.module';
 
 // noinspection TypeScriptValidateTypes
 @Module({
@@ -27,24 +28,8 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
         ),
       ],
     }),
+    MicroservicesModule,
     HealthModule,
-    ClientsModule.registerAsync([
-      {
-        name: 'TEMPLATE_SERVICE',
-        imports: [ConfigModule],
-        useFactory: (configService: ConfigService) => ({
-          transport: Transport.RMQ,
-          options: {
-            urls: [configService.get<string>('RABBITMQ_URL')],
-            queue: 'template_queue',
-            queueOptions: {
-              durable: false,
-            },
-          },
-        }),
-        inject: [ConfigService],
-      },
-    ]),
   ],
   controllers: [AppController],
   providers: [AppService],
