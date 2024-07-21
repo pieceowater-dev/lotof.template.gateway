@@ -1,1 +1,1 @@
-# lotof.hub.gateway
+# lotof.template.gateway
