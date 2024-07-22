@@ -2,6 +2,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ClientsModule, Transport } from '@nestjs/microservices';
+import { createRabbitMQOptions } from '../config/rabbitmq.config';
 
 @Module({
   imports: [
@@ -12,15 +13,8 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
         useFactory: (configService: ConfigService) => ({
           transport: Transport.RMQ,
           options: {
-            urls: [configService.get<string>('RABBITMQ_URL')],
             queue: 'template_queue',
-            queueOptions: {
-              durable: false,
-            },
-            socketOptions: {
-              heartbeatIntervalInSeconds: 60,
-              reconnectTimeInSeconds: 10,
-            },
+            ...createRabbitMQOptions(configService),
           },
         }),
         inject: [ConfigService],
