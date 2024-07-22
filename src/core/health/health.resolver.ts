@@ -2,6 +2,7 @@
 import { Resolver, Query } from '@nestjs/graphql';
 import { Inject } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
+import { catchError, throwError, timeout } from 'rxjs';
 
 @Resolver()
 export class HealthResolver {
@@ -13,7 +14,18 @@ export class HealthResolver {
   async health(): Promise<string> {
     try {
       const responses = await Promise.all([
-        this.templateClient.send<string, string>('ping', '').toPromise(),
+        this.templateClient
+          .send<string, string>('ping', '')
+          .pipe(
+            timeout(10000),
+            catchError((err) => {
+              if (err.name === 'TimeoutError') {
+                throw new Error('Request timed out');
+              }
+              return throwError(err);
+            }),
+          )
+          .toPromise(),
       ]);
 
       if (responses.every((res) => res === 'PONG')) {
