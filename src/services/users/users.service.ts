@@ -15,7 +15,7 @@ export class UsersService {
     console.log('UsersService findAll filter:', listUserFilterInput);
     return {
       rows: [
-        { id: 1, name: 'John Doll' },
+        { id: 1, name: 'John Doe' },
         { id: 2, name: 'Adam Smith' },
         { id: 3, name: 'Eva Bruh' },
       ],

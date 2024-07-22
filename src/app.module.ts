@@ -7,7 +7,6 @@ import { join } from 'path';
 import { HealthModule } from './core/health/health.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ClientsModule, Transport } from '@nestjs/microservices';
 import { MicroservicesModule } from './core/microservices/microservices.module';
 import { UsersModule } from './services/users/users.module';
 
