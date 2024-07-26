@@ -1,6 +1,6 @@
 // src/app.module.ts
 import { Module } from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ConfigModule } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path';
@@ -8,7 +8,7 @@ import { HealthModule } from './core/health/health.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MicroservicesModule } from './core/microservices/microservices.module';
-import { UsersModule } from './services/users/users.module';
+import { ItemsModule } from './services/items/items.module';
 
 // noinspection TypeScriptValidateTypes
 @Module({
@@ -30,7 +30,7 @@ import { UsersModule } from './services/users/users.module';
     }),
     MicroservicesModule,
     HealthModule,
-    UsersModule,
+    ItemsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
