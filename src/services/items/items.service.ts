@@ -1,14 +1,21 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { CreateItemInput } from './dto/create-item.input';
 import { UpdateItemInput } from './dto/update-item.input';
 import { ListItemFilterInput } from './dto/list-item.filter.input';
 import { Item } from './entities/item.entity';
 import { PaginatedEntity } from '../utils/paginated.list/paginated.entity';
+import { ClientProxy } from '@nestjs/microservices';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class ItemsService {
-  create(createItemInput: CreateItemInput): Item {
-    return { id: 1, ...createItemInput };
+  constructor(@Inject('TEMPLATE_SERVICE') private client: ClientProxy) {}
+
+  async create(createItemInput: CreateItemInput): Promise<Observable<Item>> {
+    return this.client.send<Item, CreateItemInput>(
+      'createItem',
+      createItemInput,
+    );
   }
 
   findAll(listItemFilterInput: ListItemFilterInput): PaginatedEntity<Item> {
