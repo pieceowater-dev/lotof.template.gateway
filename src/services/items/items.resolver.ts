@@ -21,26 +21,26 @@ export class ItemsResolver {
   }
 
   @Mutation(() => Item)
-  updateItem(
+  async updateItem(
     @Args('updateItemInput')
     updateItemInput: UpdateItemInput,
-  ) {
+  ): Promise<Observable<Item>> {
     return this.itemsService.update(updateItemInput.id, updateItemInput);
   }
 
   @Query(() => PaginatedItemList, { name: 'items' })
-  findAll(
+  async findAll(
     @Args('filter')
     listItemFilterInput: ListItemFilterInput,
-  ): PaginatedEntity<Item> {
+  ): Promise<Observable<PaginatedEntity<Item>>> {
     return this.itemsService.findAll(listItemFilterInput);
   }
 
   @Query(() => Item, { name: 'item' })
-  findOne(
+  async findOne(
     @Args('id', { type: () => Int })
     id: number,
-  ) {
+  ): Promise<Observable<Item>> {
     return this.itemsService.findOne(id);
   }
 }

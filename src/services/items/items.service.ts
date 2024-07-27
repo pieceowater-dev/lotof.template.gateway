@@ -1,3 +1,4 @@
+import { sendMessageToService } from '@pieceowater-dev/lotof.lib.broadcaster/dist/utils/sendMessage';
 import { Inject, Injectable } from '@nestjs/common';
 import { CreateItemInput } from './dto/create-item.input';
 import { UpdateItemInput } from './dto/update-item.input';
@@ -12,31 +13,34 @@ export class ItemsService {
   constructor(@Inject('TEMPLATE_SERVICE') private client: ClientProxy) {}
 
   async create(createItemInput: CreateItemInput): Promise<Observable<Item>> {
-    return this.client.send<Item, CreateItemInput>(
+    return sendMessageToService<Item, CreateItemInput>(
+      this.client,
       'createItem',
       createItemInput,
     );
   }
 
-  findAll(listItemFilterInput: ListItemFilterInput): PaginatedEntity<Item> {
-    console.log('ItemsService findAll filter:', listItemFilterInput);
-    return {
-      rows: [
-        { id: 1, name: 'Item1' },
-        { id: 2, name: 'Item2' },
-        { id: 3, name: 'Item3' },
-      ],
-      info: {
-        count: 10,
-      },
-    };
+  async findAll(
+    listItemFilterInput: ListItemFilterInput,
+  ): Promise<Observable<PaginatedEntity<Item>>> {
+    return sendMessageToService<PaginatedEntity<Item>, ListItemFilterInput>(
+      this.client,
+      'findAllItem',
+      listItemFilterInput,
+    );
   }
 
-  findOne(id: number): Item {
-    return { id: id, name: 'Some Item' };
+  async findOne(id: number): Promise<Observable<Item>> {
+    return sendMessageToService<Item, number>(this.client, 'findOneItem', id);
   }
 
-  update(id: number, updateItemInput: UpdateItemInput): Item {
-    return { id: id, name: updateItemInput.name ?? 'Item' };
+  async update(
+    id: number,
+    updateItemInput: UpdateItemInput,
+  ): Promise<Observable<Item>> {
+    return sendMessageToService<
+      Item,
+      { id: number; updateItemInput: UpdateItemInput }
+    >(this.client, 'updateItem', { id: id, updateItemInput: updateItemInput });
   }
 }
