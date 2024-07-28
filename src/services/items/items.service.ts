@@ -1,4 +1,4 @@
-import { sendMessageToService } from '@pieceowater-dev/lotof.lib.broadcaster/dist/utils/sendMessage';
+import { sendMessageToService } from '@pieceowater-dev/lotof.lib.broadcaster/utils/sendMessage';
 import { Inject, Injectable } from '@nestjs/common';
 import { CreateItemInput } from './dto/create-item.input';
 import { UpdateItemInput } from './dto/update-item.input';
