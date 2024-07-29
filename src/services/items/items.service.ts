@@ -5,11 +5,11 @@ import { ListItemFilterInput } from './dto/list-item.filter.input';
 import { Item } from './entities/item.entity';
 import { PaginatedEntity } from '../utils/paginated.list/paginated.entity';
 import { Observable } from 'rxjs';
-import { GateMicroservicesProvider } from '../../core/microservices/microservices.provider';
+import { TemplateGateMicroservicesProvider } from '../../core/microservices/microservices.provider';
 
 @Injectable()
 export class ItemsService {
-  constructor(private templateProvider: GateMicroservicesProvider) {}
+  constructor(private templateProvider: TemplateGateMicroservicesProvider) {}
 
   async create(createItemInput: CreateItemInput): Promise<Observable<Item>> {
     return this.templateProvider.sendWithTimeout<Item, CreateItemInput>(

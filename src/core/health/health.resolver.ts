@@ -1,10 +1,10 @@
 // src/health/health.resolver.ts
 import { Resolver, Query } from '@nestjs/graphql';
-import { GateMicroservicesProvider } from '../microservices/microservices.provider';
+import { TemplateGateMicroservicesProvider } from '../microservices/microservices.provider';
 
 @Resolver()
 export class HealthResolver {
-  constructor(private templateProvider: GateMicroservicesProvider) {}
+  constructor(private templateProvider: TemplateGateMicroservicesProvider) {}
 
   @Query(() => String)
   async health(): Promise<string> {

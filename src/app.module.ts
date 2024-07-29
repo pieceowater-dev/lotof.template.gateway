@@ -23,6 +23,7 @@ import { ItemsModule } from './services/items/items.module';
       sortSchema: true,
       playground: false,
       plugins: [
+        // eslint-disable-next-line @typescript-eslint/no-var-requires
         require('apollo-server-core').ApolloServerPluginLandingPageLocalDefault(
           { embed: true },
         ),
