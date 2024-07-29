@@ -14,8 +14,7 @@ export class ItemsService {
   async create(createItemInput: CreateItemInput): Promise<Observable<Item>> {
     return this.provider.sendWithTimeout<Item, CreateItemInput>(
       'createItem',
-      createItemInput,
-      3000,
+      createItemInput
     );
   }
 
