@@ -9,10 +9,10 @@ import { GateMicroservicesProvider } from '../../core/microservices/microservice
 
 @Injectable()
 export class ItemsService {
-  constructor(private provider: GateMicroservicesProvider) {}
+  constructor(private templateProvider: GateMicroservicesProvider) {}
 
   async create(createItemInput: CreateItemInput): Promise<Observable<Item>> {
-    return this.provider.sendWithTimeout<Item, CreateItemInput>(
+    return this.templateProvider.sendWithTimeout<Item, CreateItemInput>(
       'createItem',
       createItemInput,
     );
@@ -21,23 +21,29 @@ export class ItemsService {
   async findAll(
     listItemFilterInput: ListItemFilterInput,
   ): Promise<Observable<PaginatedEntity<Item>>> {
-    return this.provider.sendWithTimeout<
+    return this.templateProvider.sendWithTimeout<
       PaginatedEntity<Item>,
       ListItemFilterInput
     >('findAllItem', listItemFilterInput);
   }
 
   async findOne(id: number): Promise<Observable<Item>> {
-    return this.provider.sendWithTimeout<Item, number>('findOneItem', id);
+    return this.templateProvider.sendWithTimeout<Item, number>(
+      'findOneItem',
+      id,
+    );
   }
 
   async update(
     id: number,
     updateItemInput: UpdateItemInput,
   ): Promise<Observable<Item>> {
-    return this.provider.sendWithTimeout<Item, UpdateItemInput>('updateItem', {
-      id: id,
-      ...updateItemInput,
-    });
+    return this.templateProvider.sendWithTimeout<Item, UpdateItemInput>(
+      'updateItem',
+      {
+        id: id,
+        ...updateItemInput,
+      },
+    );
   }
 }
