@@ -3,6 +3,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ClientsModule } from '@nestjs/microservices';
 import { createRabbitMQOptions } from '../config/rabbitmq.config';
+import { GateMicroservicesProvider } from './microservices.provider';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { createRabbitMQOptions } from '../config/rabbitmq.config';
       },
     ]),
   ],
-  exports: [ClientsModule],
+  providers: [GateMicroservicesProvider],
+  exports: [ClientsModule, GateMicroservicesProvider],
 })
 export class MicroservicesModule {}
