@@ -9,6 +9,9 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MicroservicesModule } from './core/microservices/microservices.module';
 import { ItemsModule } from './services/items/items.module';
+import { RedisModule } from './core/redis/redis.module';
+import { IdempotencyInterceptor } from './core/interceptors/idempotency.interceptor';
+import { APP_INTERCEPTOR } from '@nestjs/core';
 
 // noinspection TypeScriptValidateTypes
 @Module({
@@ -31,9 +34,16 @@ import { ItemsModule } from './services/items/items.module';
     }),
     MicroservicesModule,
     HealthModule,
+    RedisModule,
     ItemsModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: IdempotencyInterceptor,
+    },
+  ],
 })
 export class AppModule {}

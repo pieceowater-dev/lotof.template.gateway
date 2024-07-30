@@ -11,7 +11,7 @@ export class HealthResolver {
     try {
       const responses = await Promise.all([
         this.templateProvider
-          .sendWithTimeout<string, string>('ping', '', 50)
+          .sendWithTimeout<string, string>('ping', '', 50, true)
           .toPromise(),
       ]);
 
