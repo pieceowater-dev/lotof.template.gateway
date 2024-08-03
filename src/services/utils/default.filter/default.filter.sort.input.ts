@@ -1,6 +1,6 @@
 import { Field, InputType, registerEnumType } from '@nestjs/graphql';
 
-enum FilterSortByEnum {
+export enum FilterSortByEnum {
   ASC = 'ASC',
   DESC = 'DESC',
 }
@@ -14,7 +14,10 @@ export class DefaultFilterSortInput {
   @Field({ nullable: true, defaultValue: 'id' })
   field: string;
 
-  @Field(() => FilterSortByEnum)
+  @Field(() => FilterSortByEnum, {
+    nullable: true,
+    defaultValue: FilterSortByEnum.DESC,
+  })
   by: FilterSortByEnum;
 
   @Field({ nullable: true, defaultValue: true })

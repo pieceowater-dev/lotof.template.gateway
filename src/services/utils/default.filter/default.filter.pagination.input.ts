@@ -1,6 +1,6 @@
 import { Field, InputType, registerEnumType } from '@nestjs/graphql';
 
-enum FilterPaginationLengthEnum {
+export enum FilterPaginationLengthEnum {
   TEN = 10,
   FIFTEEN = 15,
   TWENTY = 20,
@@ -31,6 +31,9 @@ export class DefaultFilterPaginationInput {
   @Field({ nullable: true, defaultValue: 0 })
   page: number;
 
-  @Field(() => FilterPaginationLengthEnum)
+  @Field(() => FilterPaginationLengthEnum, {
+    nullable: true,
+    defaultValue: FilterPaginationLengthEnum.TEN,
+  })
   length: FilterPaginationLengthEnum;
 }
