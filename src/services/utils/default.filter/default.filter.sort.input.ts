@@ -1,8 +1,8 @@
 import { Field, InputType, registerEnumType } from '@nestjs/graphql';
 
 enum FilterSortByEnum {
-  ASC,
-  DESC,
+  ASC = 'ASC',
+  DESC = 'DESC',
 }
 
 registerEnumType(FilterSortByEnum, {
