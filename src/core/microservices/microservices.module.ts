@@ -3,7 +3,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ClientsModule } from '@nestjs/microservices';
 import { createRabbitMQOptions } from '../config/rabbitmq.config';
-import { TemplateGateMicroservicesProvider } from './microservices.provider';
+import { TemplateGateMicroservicesProvider } from './microservices.template-provider';
 
 @Module({
   imports: [

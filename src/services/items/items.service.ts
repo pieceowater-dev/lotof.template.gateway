@@ -5,7 +5,7 @@ import { ListItemFilterInput } from './dto/list-item.filter.input';
 import { Item } from './entities/item.entity';
 import { PaginatedEntity } from '../utils/paginated.list/paginated.entity';
 import { Observable } from 'rxjs';
-import { TemplateGateMicroservicesProvider } from '../../core/microservices/microservices.provider';
+import { TemplateGateMicroservicesProvider } from '../../core/microservices/microservices.template-provider';
 
 @Injectable()
 export class ItemsService {

@@ -1,6 +1,6 @@
 // src/health/health.resolver.ts
 import { Resolver, Query } from '@nestjs/graphql';
-import { TemplateGateMicroservicesProvider } from '../microservices/microservices.provider';
+import { TemplateGateMicroservicesProvider } from '../microservices/microservices.template-provider';
 
 @Resolver()
 export class HealthResolver {
