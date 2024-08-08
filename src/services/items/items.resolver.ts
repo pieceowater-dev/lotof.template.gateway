@@ -5,8 +5,8 @@ import { CreateItemInput } from './dto/create-item.input';
 import { UpdateItemInput } from './dto/update-item.input';
 import { ListItemFilterInput } from './dto/list-item.filter.input';
 import { PaginatedItemList } from './entities/paginated.item.list.entity';
-import { PaginatedEntity } from '../utils/paginated.list/paginated.entity';
 import { Observable } from 'rxjs';
+import { PaginatedEntity } from '@pieceowater-dev/lotof.lib.broadcaster/utils/pagination/entity.pagination';
 
 @Resolver(() => Item)
 export class ItemsResolver {

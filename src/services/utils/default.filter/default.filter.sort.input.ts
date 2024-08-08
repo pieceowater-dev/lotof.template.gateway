@@ -1,9 +1,5 @@
 import { Field, InputType, registerEnumType } from '@nestjs/graphql';
-
-export enum FilterSortByEnum {
-  ASC = 'ASC',
-  DESC = 'DESC',
-}
+import { FilterSortByEnum } from '@pieceowater-dev/lotof.lib.broadcaster/utils/filter/sort.filter';
 
 registerEnumType(FilterSortByEnum, {
   name: 'FilterSortByEnum',

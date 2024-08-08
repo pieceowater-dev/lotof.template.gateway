@@ -1,12 +1,8 @@
 import { Field, InputType } from '@nestjs/graphql';
-import {
-  DefaultFilterPaginationInput,
-  FilterPaginationLengthEnum,
-} from './default.filter.pagination.input';
-import {
-  DefaultFilterSortInput,
-  FilterSortByEnum,
-} from './default.filter.sort.input';
+import { DefaultFilterPaginationInput } from './default.filter.pagination.input';
+import { DefaultFilterSortInput } from './default.filter.sort.input';
+import { FilterPaginationLengthEnum } from '@pieceowater-dev/lotof.lib.broadcaster/utils/filter/pagination.filter';
+import { FilterSortByEnum } from '@pieceowater-dev/lotof.lib.broadcaster/utils/filter/sort.filter';
 
 @InputType()
 export class DefaultFilterInput {

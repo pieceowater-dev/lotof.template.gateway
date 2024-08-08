@@ -3,9 +3,9 @@ import { CreateItemInput } from './dto/create-item.input';
 import { UpdateItemInput } from './dto/update-item.input';
 import { ListItemFilterInput } from './dto/list-item.filter.input';
 import { Item } from './entities/item.entity';
-import { PaginatedEntity } from '../utils/paginated.list/paginated.entity';
 import { Observable } from 'rxjs';
 import { TemplateGateMicroservicesProvider } from '../../core/microservices/microservices.template-provider';
+import { PaginatedEntity } from '@pieceowater-dev/lotof.lib.broadcaster/utils/pagination/entity.pagination';
 
 @Injectable()
 export class ItemsService {

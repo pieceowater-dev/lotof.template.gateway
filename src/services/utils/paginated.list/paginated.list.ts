@@ -1,6 +1,6 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
-import { PaginatedEntity } from './paginated.entity';
 import { Type } from '@nestjs/common';
+import { PaginatedEntity } from '@pieceowater-dev/lotof.lib.broadcaster/utils/pagination/entity.pagination';
 
 export function PaginatedList<T>(classRef: Type<T>): Type<PaginatedEntity<T>> {
   @ObjectType(`${classRef.name}Info`)
