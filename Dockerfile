@@ -28,7 +28,6 @@ WORKDIR /app
 # Copy only necessary files from the build stage
 COPY --from=build /app/package*.json ./
 COPY --from=build /app/dist ./dist
-COPY --from=build /app/schema.gql ./schema.gql
 
 # Install only production dependencies
 RUN apt-get update && npm install --omit=dev
@@ -39,7 +38,8 @@ ENV NODE_ENV=production
 ARG BUILD_MODE
 ENV MODE=$BUILD_MODE
 
-# Expose ports
+ENV PORT=3000
+# Expose port
 EXPOSE 3000
 
 # Run the application

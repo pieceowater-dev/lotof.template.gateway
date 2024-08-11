@@ -18,7 +18,7 @@ async function bootstrap() {
   const port = configService.get<number>('PORT') || 3000;
 
   await app.startAllMicroservices();
-  await app.listen(port, '127.0.0.1');
+  await app.listen(port, '0.0.0.0');
   console.log(`Application is running on: ${await app.getUrl()}`);
 }
 bootstrap();
