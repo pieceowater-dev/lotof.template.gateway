@@ -9,7 +9,7 @@ export class AppService {
   ) {}
 
   getHello(): string {
-    return 'Hello Universe';
+    return 'Hello Universe!';
   }
 
   async pingTemplateMicroservice(): Promise<string> {
