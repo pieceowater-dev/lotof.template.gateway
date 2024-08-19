@@ -50,7 +50,6 @@ jobs:
           tags: |
             ${{ steps.meta.outputs.tags }}
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.GIT_SHORT_SHA }}
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest${{ github.ref_name == 'main' && ',latest' || '' }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
