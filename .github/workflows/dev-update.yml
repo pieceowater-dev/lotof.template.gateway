@@ -1,0 +1,33 @@
+name: Update Docker Compose Image Tag
+
+on:
+  push:
+    branches:
+      - main  # to test
+
+jobs:
+  update-tag:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Get short commit SHA
+        id: get_sha
+        run: echo "GIT_SHORT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+
+      - name: Extract repository name
+        id: extract_repo_name
+        run: echo "REPO_NAME=$(echo ${{ github.repository }} | cut -d'/' -f2)" >> $GITHUB_ENV
+
+      - name: Update image tag in docker-compose.yaml
+        run: |
+          sed -i "s|\(image: .*${{ env.REPO_NAME }}:\).*|\1${{ env.GIT_SHORT_SHA }}|" src/apps/${{ env.REPO_NAME }}/docker-compose.yaml
+
+      - name: Commit changes
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git commit -am "Update Docker Compose image tag to $GIT_SHORT_SHA"
+          git push
