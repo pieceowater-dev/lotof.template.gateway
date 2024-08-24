@@ -3,7 +3,7 @@ name: Compose
 on:
   push:
     branches:
-      - main
+      - dev
 
 jobs:
   compose:
