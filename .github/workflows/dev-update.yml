@@ -1,4 +1,4 @@
-name: Update Docker Compose Image Tag
+name: Update Image Tag
 
 on:
   push:
@@ -27,14 +27,7 @@ jobs:
           cd target-repo
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
-
-      - name: Update image tag in docker-compose.yaml
-        run: |
-          cd target-repo
+          ls -R
           sed -i "s|\(image: .*${{ env.REPO_NAME }}:\).*|\1${{ env.GIT_SHORT_SHA }}|" src/apps/${{ env.REPO_NAME }}/docker-compose.yaml
-
-      - name: Commit and push changes to the target repository
-        run: |
-          cd target-repo
           git commit -am "Update Docker Compose image tag to $GIT_SHORT_SHA"
           git push origin main
