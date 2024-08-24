@@ -1,4 +1,4 @@
-name: Update Image Tag
+name: Compose
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  update-tag:
+  compose:
     runs-on: ubuntu-latest
 
     steps:
