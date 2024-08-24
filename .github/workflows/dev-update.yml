@@ -22,10 +22,8 @@ jobs:
         run: echo "REPO_NAME=$(echo ${{ github.repository }} | cut -d'/' -f2)" >> $GITHUB_ENV
 
       - name: Clone & Update repository
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          git clone https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository_owner }}/lotof.cloud.resources.dev.git target-repo
+          git clone https://x-access-token:${{ secrets.GIT_PAT }}@github.com/${{ github.repository_owner }}/lotof.cloud.resources.dev.git target-repo
           cd target-repo
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
