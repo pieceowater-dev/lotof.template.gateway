@@ -22,6 +22,7 @@ import { ItemsModule } from './services/items/items.module';
       autoSchemaFile: join(process.cwd(), 'schema.gql'),
       sortSchema: true,
       playground: false,
+      introspection: true,
       plugins: [
         // eslint-disable-next-line @typescript-eslint/no-var-requires
         require('apollo-server-core').ApolloServerPluginLandingPageLocalDefault(
