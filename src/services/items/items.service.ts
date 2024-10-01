@@ -27,10 +27,10 @@ export class ItemsService {
     >('findAllItem', listItemFilterInput);
   }
 
-  async findOne(id: number): Promise<Observable<Item>> {
-    return this.templateProvider.sendWithTimeout<Item, number>(
+  async findOne(itemId: number): Promise<Observable<Item>> {
+    return this.templateProvider.sendWithTimeout<Item, { id: number }>(
       'findOneItem',
-      id,
+      { id: itemId },
     );
   }
 
