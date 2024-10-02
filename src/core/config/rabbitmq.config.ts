@@ -11,7 +11,7 @@ export const createRabbitMQOptions = (
     urls: [configService.get<string>('RABBITMQ_URL')],
     queue: queue,
     queueOptions: {
-      durable: true,
+      durable: false,
     },
     socketOptions: {
       heartbeatIntervalInSeconds: 60,

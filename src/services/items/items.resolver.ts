@@ -1,4 +1,12 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import {
+  Resolver,
+  Query,
+  Mutation,
+  Args,
+  Int,
+  Subscription,
+  Context,
+} from '@nestjs/graphql';
 import { ItemsService } from './items.service';
 import { Item } from './entities/item.entity';
 import { CreateItemInput } from './dto/create-item.input';
@@ -6,7 +14,8 @@ import { UpdateItemInput } from './dto/update-item.input';
 import { ListItemFilterInput } from './dto/list-item.filter.input';
 import { PaginatedItemList } from './entities/paginated.item.list.entity';
 import { Observable } from 'rxjs';
-import { PaginatedEntity } from '@pieceowater-dev/lotof.lib.broadcaster/utils/pagination/entity.pagination';
+import { pubSub } from '../../core/pubSub';
+import { PaginatedEntity } from '@pieceowater-dev/lotof.lib.broadcaster';
 
 @Resolver(() => Item)
 export class ItemsResolver {
@@ -16,8 +25,13 @@ export class ItemsResolver {
   async createItem(
     @Args('createItemInput')
     createItemInput: CreateItemInput,
+    @Context() ctx: any,
   ): Promise<Observable<Item>> {
-    return this.itemsService.create(createItemInput);
+    const item = this.itemsService.create(createItemInput);
+    item.then(() => {
+      pubSub.publish('itemMutated:' + ctx.requestId, { data: item });
+    });
+    return item;
   }
 
   @Mutation(() => Item)
@@ -42,5 +56,16 @@ export class ItemsResolver {
     id: number,
   ): Promise<Observable<Item>> {
     return this.itemsService.findOne(id);
+  }
+
+  @Subscription(() => Item, {
+    filter: (payload: any, variables: any) => {
+      return variables.requestId === payload.requestId;
+    },
+  })
+  async mutationResult(
+    @Args('requestId', { type: () => String }) requestId: string,
+  ) {
+    return pubSub.asyncIterator('itemMutated:' + requestId);
   }
 }
